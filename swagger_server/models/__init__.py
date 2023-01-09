@@ -11,9 +11,8 @@ from swagger_server.models.forecast import Forecast
 from swagger_server.models.forecast_response import ForecastResponse
 from swagger_server.models.forecast_temperature import ForecastTemperature
 from swagger_server.models.heater_state import HeaterState
-from swagger_server.models.lighting_summary import LightingSummary
+from swagger_server.models.image_info import ImageInfo
 from swagger_server.models.lighting_zone import LightingZone
-from swagger_server.models.lighting_zone_status import LightingZoneStatus
 from swagger_server.models.temperatue_zone_status import TemperatueZoneStatus
 from swagger_server.models.temperature_summary import TemperatureSummary
 from swagger_server.models.temperature_zone import TemperatureZone

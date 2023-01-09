@@ -236,21 +236,7 @@ paths:
                 $ref: '#/components/schemas/ApiResponse'
       x-swagger-router-controller: ZWave
       x-openapi-router-controller: swagger_server.controllers.z_wave_controller
-  /lightingSummary:
-    get:
-      tags:
-      - Z-Wave
-      operationId: get_lighting_summary
-      responses:
-        "200":
-          description: ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LightingSummary'
-      x-swagger-router-controller: ZWave
-      x-openapi-router-controller: swagger_server.controllers.z_wave_controller
-  /temperature:
+  /image:
     get:
       tags:
       - Environment
@@ -264,181 +250,30 @@ paths:
                 $ref: '#/components/schemas/TemperatureSummary'
       x-swagger-router-controller: Environment
       x-openapi-router-controller: swagger_server.controllers.environment_controller
-  /temperature/forecast/{days}:
-    get:
-      tags:
-      - Environment
-      operationId: get_forecast
-      parameters:
-      - name: days
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        "200":
-          description: the forecast
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForecastResponse'
-      x-swagger-router-controller: Environment
-      x-openapi-router-controller: swagger_server.controllers.environment_controller
-  /temperature/{zoneId}:
-    get:
-      tags:
-      - Environment
-      operationId: get_zone_temperature
-      parameters:
-      - name: zoneId
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Zone temperature
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TemperatueZoneStatus'
-      x-swagger-router-controller: Environment
-      x-openapi-router-controller: swagger_server.controllers.environment_controller
-  /temperature/{zoneId}/heater:
-    get:
-      tags:
-      - Environment
-      description: gets the state of the heater
-      operationId: get_heater_state
-      parameters:
-      - name: zoneId
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        "200":
-          description: heater state
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HeaterState'
-      x-swagger-router-controller: Environment
-      x-openapi-router-controller: swagger_server.controllers.environment_controller
-  /temperature/{zoneId}/heater/{state}:
+  /image/:
     post:
       tags:
       - Environment
       description: turns the heater on or off
       operationId: set_heater_state
-      parameters:
-      - name: zoneId
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: state
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          enum:
-          - "false"
-          - "true"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageInfo'
       responses:
         "200":
-          description: Status of the operation
+          description: imaginAlry image
           content:
-            application/json:
+            image/png:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                type: string
+                format: binary
+                x-content-type: image/png
       x-swagger-router-controller: Environment
       x-openapi-router-controller: swagger_server.controllers.environment_controller
-  /zones:
-    get:
-      tags:
-      - Zones
-      operationId: get_zones
-      responses:
-        "200":
-          description: ok
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-                x-content-type: application/json
-      x-swagger-router-controller: Zones
-      x-openapi-router-controller: swagger_server.controllers.zones_controller
-  /zones/{zoneId}/quiet:
-    get:
-      tags:
-      - Zones
-      operationId: quiet_zone
-      parameters:
-      - name: zoneId
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          enum:
-          - basement
-          - first-floor
-          - second-floor
-      responses:
-        "200":
-          description: ok
-      x-swagger-router-controller: Zones
-      x-openapi-router-controller: swagger_server.controllers.zones_controller
 components:
   schemas:
-    LightingSummary:
-      type: object
-      properties:
-        zones:
-          type: array
-          items:
-            $ref: '#/components/schemas/LightingZone'
-        zoneStatus:
-          type: array
-          items:
-            $ref: '#/components/schemas/LightingZoneStatus'
-      description: ok
-      example:
-        zoneStatus:
-        - level: 6
-          lastUpdate: 2000-01-23T04:56:07.000+00:00
-          name: name
-          id: id
-        - level: 6
-          lastUpdate: 2000-01-23T04:56:07.000+00:00
-          name: name
-          id: id
-        zones:
-        - deviceType: dimmer
-          zone: zone
-          name: name
-          id: id
-          deviceId: 0
-        - deviceType: dimmer
-          zone: zone
-          name: name
-          id: id
-          deviceId: 0
     LightingZone:
       type: object
       properties:
@@ -456,31 +291,6 @@ components:
           - switch
         zone:
           type: string
-      example:
-        deviceType: dimmer
-        zone: zone
-        name: name
-        id: id
-        deviceId: 0
-    LightingZoneStatus:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        lastUpdate:
-          type: string
-          format: date-time
-        level:
-          type: integer
-          format: int32
-      description: the status of the lighting zone.
-      example:
-        level: 6
-        lastUpdate: 2000-01-23T04:56:07.000+00:00
-        name: name
-        id: id
     TemperatureSummary:
       type: object
       properties:
@@ -597,9 +407,6 @@ components:
           type: string
         state:
           type: string
-      example:
-        id: id
-        state: state
     DeviceState:
       type: object
       properties:
@@ -627,46 +434,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Forecast'
-      example:
-        city:
-          country: country
-          name: name
-          lon: 1.46581298050294517310021547018550336360931396484375
-          id: 0
-          lat: 6.02745618307040320615897144307382404804229736328125
-        values:
-        - date: 2000-01-23T04:56:07.000+00:00
-          temperature:
-            high: 3.61607674925191080461672754609026014804840087890625
-            low: 9.301444243932575517419536481611430644989013671875
-            night: 1.231513536777255612975068288506008684635162353515625
-            evening: 7.3862819483858839220147274318151175975799560546875
-            day: 4.1456080298839363962315474054776132106781005859375
-            morning: 2.027123023002321833274663731572218239307403564453125
-          weather:
-            summary: summary
-            icon: icon
-            description: description
-          humidity: 5
-          pressure: 5.962133916683182377482808078639209270477294921875
-          clouds: 7
-          windSpeed: 2.3021358869347654518833223846741020679473876953125
-        - date: 2000-01-23T04:56:07.000+00:00
-          temperature:
-            high: 3.61607674925191080461672754609026014804840087890625
-            low: 9.301444243932575517419536481611430644989013671875
-            night: 1.231513536777255612975068288506008684635162353515625
-            evening: 7.3862819483858839220147274318151175975799560546875
-            day: 4.1456080298839363962315474054776132106781005859375
-            morning: 2.027123023002321833274663731572218239307403564453125
-          weather:
-            summary: summary
-            icon: icon
-            description: description
-          humidity: 5
-          pressure: 5.962133916683182377482808078639209270477294921875
-          clouds: 7
-          windSpeed: 2.3021358869347654518833223846741020679473876953125
     Forecast:
       type: object
       properties:
@@ -689,23 +456,6 @@ components:
           $ref: '#/components/schemas/ForecastTemperature'
         weather:
           $ref: '#/components/schemas/WeatherForecast'
-      example:
-        date: 2000-01-23T04:56:07.000+00:00
-        temperature:
-          high: 3.61607674925191080461672754609026014804840087890625
-          low: 9.301444243932575517419536481611430644989013671875
-          night: 1.231513536777255612975068288506008684635162353515625
-          evening: 7.3862819483858839220147274318151175975799560546875
-          day: 4.1456080298839363962315474054776132106781005859375
-          morning: 2.027123023002321833274663731572218239307403564453125
-        weather:
-          summary: summary
-          icon: icon
-          description: description
-        humidity: 5
-        pressure: 5.962133916683182377482808078639209270477294921875
-        clouds: 7
-        windSpeed: 2.3021358869347654518833223846741020679473876953125
     City:
       type: object
       properties:
@@ -722,12 +472,6 @@ components:
           format: double
         country:
           type: string
-      example:
-        country: country
-        name: name
-        lon: 1.46581298050294517310021547018550336360931396484375
-        id: 0
-        lat: 6.02745618307040320615897144307382404804229736328125
     ForecastTemperature:
       type: object
       properties:
@@ -749,13 +493,6 @@ components:
         night:
           type: number
           format: double
-      example:
-        high: 3.61607674925191080461672754609026014804840087890625
-        low: 9.301444243932575517419536481611430644989013671875
-        night: 1.231513536777255612975068288506008684635162353515625
-        evening: 7.3862819483858839220147274318151175975799560546875
-        day: 4.1456080298839363962315474054776132106781005859375
-        morning: 2.027123023002321833274663731572218239307403564453125
     WeatherForecast:
       type: object
       properties:
@@ -765,10 +502,6 @@ components:
           type: string
         icon:
           type: string
-      example:
-        summary: summary
-        icon: icon
-        description: description
     DeviceRegistrationInfo:
       type: object
       properties:
@@ -777,6 +510,17 @@ components:
           format: uri
           example: http://10.0.0.220:8080
         id:
+          type: string
+          format: uuid
+          example: 0729a580-2240-11e6-9eb5-0002a5d5c51b
+    ImageInfo:
+      type: object
+      properties:
+        aaa:
+          type: string
+          format: uri
+          example: http://10.0.0.220:8080
+        bbb:
           type: string
           format: uuid
           example: 0729a580-2240-11e6-9eb5-0002a5d5c51b

@@ -3,19 +3,7 @@ import six
 
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
 from swagger_server.models.device_state import DeviceState  # noqa: E501
-from swagger_server.models.lighting_summary import LightingSummary  # noqa: E501
 from swagger_server import util
-
-
-def get_lighting_summary():  # noqa: E501
-    """get_lighting_summary
-
-     # noqa: E501
-
-
-    :rtype: LightingSummary
-    """
-    return 'do some magic!'
 
 
 def get_switch_state(device_id):  # noqa: E501

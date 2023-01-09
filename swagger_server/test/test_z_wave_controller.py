@@ -7,23 +7,11 @@ from six import BytesIO
 
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
 from swagger_server.models.device_state import DeviceState  # noqa: E501
-from swagger_server.models.lighting_summary import LightingSummary  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 
 class TestZWaveController(BaseTestCase):
     """ZWaveController integration test stubs"""
-
-    def test_get_lighting_summary(self):
-        """Test case for get_lighting_summary
-
-        
-        """
-        response = self.client.open(
-            '/HANNESSOFTWARE/imaginAIry/1.0.0/lightingSummary',
-            method='GET')
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
 
     def test_get_switch_state(self):
         """Test case for get_switch_state
