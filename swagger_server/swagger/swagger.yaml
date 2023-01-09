@@ -513,15 +513,100 @@ components:
           type: string
           format: uuid
           example: 0729a580-2240-11e6-9eb5-0002a5d5c51b
+    weightedPrompt:
+      type: object
+      properties:
+        name:
+          type: string
+          format: string
+          example: cat
+        weight:
+          type: integer
+          format: int64
+          example: 1
     ImageInfo:
       type: object
       properties:
-        aaa:
+        prompt:
           type: string
-          format: uri
-          example: http://10.0.0.220:8080
-        bbb:
+          format: string
+          example: a scenic landscape
+        negative_prompt:
           type: string
-          format: uuid
-          example: 0729a580-2240-11e6-9eb5-0002a5d5c51b
+          format: string
+          example: DEFAULT_NEGATIVE_PROMPT
+        prompt_strength:
+          type: number
+          format: double
+          example: 7.5
+        init_image:
+          type: string
+          format: string
+          example: None
+        init_image_strength:
+          type: number
+          format: double
+          example: 0.3
+        mask_prompt:
+          type: string
+          format: string
+          nullable: true
+          example: None
+        mask_image:
+          type: string
+          format: string
+          nullable: true
+          example: None
+        mask_mode:
+          type: string
+          format: string
+          example: REPLACE
+        mask_modify_original:
+          type: boolean
+          example: true
+        steps:
+          type: integer
+          format: int64
+          nullable: true
+        height:
+          type: string
+          format: string
+          example: None
+        width:
+          type: string
+          format: string
+          example: None
+        fix_faces:
+          type: boolean
+          example: false
+        fix_faces_fidelity:
+          type: string
+          format: string
+          example: DEFAULT_FACE_FIDELITY
+        sampler_type:
+          type: string
+          format: string
+          example: DEFAULT_SAMPLER
+        conditioning:
+          type: string
+          format: string
+          example: None
+        model:
+          type: string
+          format: string
+          example: DEFAULT_MODEL
+        seed:
+          type: integer
+          format: int64
+          nullable: true
+        upscale:
+          type: boolean
+          example: false
+        tile_mode:
+          type: boolean
+          example: true
+        weightedPrompt:
+          type: array
+          items:
+            $ref: '#/components/schemas/weightedPrompt'
 
