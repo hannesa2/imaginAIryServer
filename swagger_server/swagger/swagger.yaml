@@ -240,7 +240,7 @@ paths:
     get:
       tags:
       - Environment
-      operationId: temperature_summary
+      operationId: image_summary
       responses:
         "200":
           description: ok
@@ -254,8 +254,8 @@ paths:
     post:
       tags:
       - Environment
-      description: turns the heater on or off
-      operationId: set_heater_state
+      description: Generates image from imaginAIry
+      operationId: generate_image
       requestBody:
         content:
           application/json:

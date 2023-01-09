@@ -13,8 +13,8 @@ from swagger_server.test import BaseTestCase
 class TestEnvironmentController(BaseTestCase):
     """EnvironmentController integration test stubs"""
 
-    def test_set_heater_state(self):
-        """Test case for set_heater_state
+    def test_generate_image(self):
+        """Test case for generate_image
 
         
         """
@@ -27,8 +27,8 @@ class TestEnvironmentController(BaseTestCase):
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
-    def test_temperature_summary(self):
-        """Test case for temperature_summary
+    def test_image_summary(self):
+        """Test case for image_summary
 
         
         """
