@@ -29,7 +29,7 @@ http://localhost:8080/HANNESSOFTWARE/imaginAIry/1.0.0/swagger.json
 
 To launch the integration tests, use tox:
 ```
-sudo pip install tox
+pip install tox
 tox
 ```
 
