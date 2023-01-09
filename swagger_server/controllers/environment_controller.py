@@ -18,7 +18,12 @@ def generate_image(body=None):  # noqa: E501
     """
     if connexion.request.is_json:
         body = ImageInfo.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic! generate_image'
+
+    f = open("garage.jpg", 'rb')
+    cont = f.read()
+    f.close()
+
+    return cont
 
 
 def image_summary():  # noqa: E501
