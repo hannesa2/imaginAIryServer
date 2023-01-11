@@ -15,7 +15,7 @@ class ImageInfo(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, prompt: str=None, negative_prompt: str=None, prompt_strength: float=None, init_image: str=None, init_image_strength: float=None, mask_prompt: str=None, mask_image: str=None, mask_mode: str=None, mask_modify_original: bool=None, steps: int=None, height: str=None, width: str=None, fix_faces: bool=None, fix_faces_fidelity: str=None, sampler_type: str=None, conditioning: str=None, model: str=None, seed: int=None, upscale: bool=None, tile_mode: bool=None, weighted_prompt: List[WeightedPrompt]=None):  # noqa: E501
+    def __init__(self, prompt: str=None, negative_prompt: str=None, prompt_strength: float=None, init_image: str=None, init_image_strength: float=None, mask_prompt: str=None, mask_image: str=None, mask_mode: str=None, mask_modify_original: bool=None, steps: int=None, height: str=None, width: str=None, fix_faces: bool=None, fix_faces_fidelity: float=None, sampler_type: str=None, conditioning: str=None, model: str=None, seed: int=None, upscale: bool=None, tile_mode: bool=None, weighted_prompt: List[WeightedPrompt]=None):  # noqa: E501
         """ImageInfo - a model defined in Swagger
 
         :param prompt: The prompt of this ImageInfo.  # noqa: E501
@@ -45,7 +45,7 @@ class ImageInfo(Model):
         :param fix_faces: The fix_faces of this ImageInfo.  # noqa: E501
         :type fix_faces: bool
         :param fix_faces_fidelity: The fix_faces_fidelity of this ImageInfo.  # noqa: E501
-        :type fix_faces_fidelity: str
+        :type fix_faces_fidelity: float
         :param sampler_type: The sampler_type of this ImageInfo.  # noqa: E501
         :type sampler_type: str
         :param conditioning: The conditioning of this ImageInfo.  # noqa: E501
@@ -75,7 +75,7 @@ class ImageInfo(Model):
             'height': str,
             'width': str,
             'fix_faces': bool,
-            'fix_faces_fidelity': str,
+            'fix_faces_fidelity': float,
             'sampler_type': str,
             'conditioning': str,
             'model': str,
@@ -306,6 +306,12 @@ class ImageInfo(Model):
         :param mask_mode: The mask_mode of this ImageInfo.
         :type mask_mode: str
         """
+        allowed_values = ["replace", "keep"]  # noqa: E501
+        if mask_mode not in allowed_values:
+            raise ValueError(
+                "Invalid value for `mask_mode` ({0}), must be one of {1}"
+                .format(mask_mode, allowed_values)
+            )
 
         self._mask_mode = mask_mode
 
@@ -415,22 +421,22 @@ class ImageInfo(Model):
         self._fix_faces = fix_faces
 
     @property
-    def fix_faces_fidelity(self) -> str:
+    def fix_faces_fidelity(self) -> float:
         """Gets the fix_faces_fidelity of this ImageInfo.
 
 
         :return: The fix_faces_fidelity of this ImageInfo.
-        :rtype: str
+        :rtype: float
         """
         return self._fix_faces_fidelity
 
     @fix_faces_fidelity.setter
-    def fix_faces_fidelity(self, fix_faces_fidelity: str):
+    def fix_faces_fidelity(self, fix_faces_fidelity: float):
         """Sets the fix_faces_fidelity of this ImageInfo.
 
 
         :param fix_faces_fidelity: The fix_faces_fidelity of this ImageInfo.
-        :type fix_faces_fidelity: str
+        :type fix_faces_fidelity: float
         """
 
         self._fix_faces_fidelity = fix_faces_fidelity

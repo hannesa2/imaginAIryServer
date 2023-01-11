@@ -534,7 +534,7 @@ components:
         negative_prompt:
           type: string
           format: string
-          example: DEFAULT_NEGATIVE_PROMPT
+          example: None
         prompt_strength:
           type: number
           format: double
@@ -559,8 +559,9 @@ components:
           example: None
         mask_mode:
           type: string
-          format: string
-          example: REPLACE
+          enum:
+          - replace
+          - keep
         mask_modify_original:
           type: boolean
           example: true
@@ -580,13 +581,13 @@ components:
           type: boolean
           example: false
         fix_faces_fidelity:
-          type: string
-          format: string
-          example: DEFAULT_FACE_FIDELITY
+          type: number
+          format: double
+          example: 0.2
         sampler_type:
           type: string
           format: string
-          example: DEFAULT_SAMPLER
+          example: k_dpmpp_2m
         conditioning:
           type: string
           format: string
@@ -594,7 +595,7 @@ components:
         model:
           type: string
           format: string
-          example: DEFAULT_MODEL
+          example: SD-1.5
         seed:
           type: integer
           format: int64
