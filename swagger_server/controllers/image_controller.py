@@ -45,40 +45,6 @@ def generate_ai_image(body=None):
 
         prompts = [ImaginePrompt(weight_list)]
 
-        # for i in body.weighted_prompt:
-        #     WeightedPrompt(i.name, i.weight)
-
-        # prompts = [
-        #     ImaginePrompt([
-        #         WeightedPrompt(body.weighted_prompt for
-        #             print(i)
-        #         ]
-        #     ]
-
-        # for body.weighted_prompt.for
-        #         WeightedPrompt("cat", weight=1),
-        #         WeightedPrompt("cat", weight=1),
-        #     )
-
-        # ImaginePrompt("a scenic landscape", seed=1, upscale=True),
-        # ImaginePrompt("a bowl of fruit"),
-        # ImaginePrompt([
-        #    WeightedPrompt("cat", weight=1),
-        #    WeightedPrompt("rabbit", weight=1),
-        # ]),
-        # ImaginePrompt(
-        #    "a spacious building",
-        #    init_image=LazyLoadingImage(url=url)
-        # ),
-        # ImaginePrompt(
-        #     "a bowl of strawberries",
-        #     init_image=LazyLoadingImage(filepath="mypath/to/bowl_of_fruit.jpg"),
-        #     mask_prompt="fruit OR stem{*2}",  # amplify the stem mask x2
-        #     mask_mode="replace",
-        #     mask_modify_original=True,
-        # ),
-        # ImaginePrompt("strawberries", tile_mode=True),
-
     for result in imagine(prompts):
         generated_imgs_path = os.path.join("./generatedImages", "generated")
     os.makedirs(generated_imgs_path, exist_ok=True)
