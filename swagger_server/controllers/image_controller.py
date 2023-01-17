@@ -3,7 +3,6 @@ import os
 import connexion
 import imaginairy
 from imaginairy import ImaginePrompt, LazyLoadingImage, imagine_image_files, WeightedPrompt, imagine
-
 from swagger_server.models.image_info import ImageInfo  # noqa: E501
 
 
@@ -14,21 +13,63 @@ def generate_ai_image(body=None):
         body = request_none_able(body)
         print("after body=", body)
 
-    print("#1 prompt=", body.prompt)
-
     url = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Thomas_Cole_-_Architect%E2%80%99s_Dream_-_Google_Art_Project.jpg/540px-Thomas_Cole_-_Architect%E2%80%99s_Dream_-_Google_Art_Project.jpg"
-    prompts = [
-        ImaginePrompt(body.prompt, seed=1, upscale=True),
-        #ImaginePrompt("a scenic landscape", seed=1, upscale=True),
+    if body.weighted_prompt is None:
+        prompts = [
+            ImaginePrompt(prompt=body.prompt,
+                          negative_prompt=body.negative_prompt,
+                          prompt_strength=body.prompt_strength,
+                          init_image=body.init_image,
+                          init_image_strength=body.init_image_strength,
+                          mask_prompt=body.mask_prompt,
+                          mask_image=body.mask_image,
+                          mask_mode=body.mask_mode,
+                          mask_modify_original=body.mask_modify_original,
+                          seed=body.seed,
+                          steps=body.steps,
+                          height=body.height,
+                          width=body.width,
+                          upscale=body.upscale,
+                          fix_faces=body.fix_faces,
+                          fix_faces_fidelity=body.fix_faces_fidelity,
+                          sampler_type=body.sampler_type,
+                          conditioning=body.conditioning,
+                          tile_mode=body.tile_mode,
+                          model=body.model
+                          )
+        ]
+    else:
+        weight_list = []  # list
+        for i in body.weighted_prompt:
+            weight_list.append(WeightedPrompt(i.name, i.weight))
+
+        prompts = [ImaginePrompt(weight_list)]
+
+        # for i in body.weighted_prompt:
+        #     WeightedPrompt(i.name, i.weight)
+
+        # prompts = [
+        #     ImaginePrompt([
+        #         WeightedPrompt(body.weighted_prompt for
+        #             print(i)
+        #         ]
+        #     ]
+
+        # for body.weighted_prompt.for
+        #         WeightedPrompt("cat", weight=1),
+        #         WeightedPrompt("cat", weight=1),
+        #     )
+
+        # ImaginePrompt("a scenic landscape", seed=1, upscale=True),
         # ImaginePrompt("a bowl of fruit"),
-        #ImaginePrompt([
+        # ImaginePrompt([
         #    WeightedPrompt("cat", weight=1),
         #    WeightedPrompt("rabbit", weight=1),
-        #]),
-        #ImaginePrompt(
+        # ]),
+        # ImaginePrompt(
         #    "a spacious building",
         #    init_image=LazyLoadingImage(url=url)
-        #),
+        # ),
         # ImaginePrompt(
         #     "a bowl of strawberries",
         #     init_image=LazyLoadingImage(filepath="mypath/to/bowl_of_fruit.jpg"),
@@ -37,19 +78,18 @@ def generate_ai_image(body=None):
         #     mask_modify_original=True,
         # ),
         # ImaginePrompt("strawberries", tile_mode=True),
-    ]
 
     for result in imagine(prompts):
         generated_imgs_path = os.path.join("./generatedImages", "generated")
-        os.makedirs(generated_imgs_path, exist_ok=True)
-        base_count = len(os.listdir(generated_imgs_path))
+    os.makedirs(generated_imgs_path, exist_ok=True)
+    base_count = len(os.listdir(generated_imgs_path))
 
-        filename = f"{base_count:08}_S{body.seed}_step{body.steps}_{body.prompt}.jpg"
-        print("save to ", filename)
-        result.save(filename)
-        f = open(filename, 'rb')
-        cont = f.read()
-        f.close()
+    filename = f"{base_count:08}_S{body.seed}_step{body.steps}_{body.prompt}.jpg"
+    print("save to ", filename)
+    result.save(filename)
+    f = open(filename, 'rb')
+    cont = f.read()
+    f.close()
 
     # or
     # imagine_image_files(prompts, outdir="./my-art2")
