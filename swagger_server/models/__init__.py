@@ -17,3 +17,4 @@ from swagger_server.models.temperatue_zone_status import TemperatueZoneStatus
 from swagger_server.models.temperature_summary import TemperatureSummary
 from swagger_server.models.temperature_zone import TemperatureZone
 from swagger_server.models.weather_forecast import WeatherForecast
+from swagger_server.models.weighted_prompt import WeightedPrompt

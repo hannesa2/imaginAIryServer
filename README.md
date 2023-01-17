@@ -44,3 +44,7 @@ docker build -t swagger_server .
 # starting up a container
 docker run -p 8080:8080 swagger_server
 ```
+
+## Apple M1 usage
+
+It needs this https://stackoverflow.com/a/68137855/1079990 and install each separate instead of requirements.txt

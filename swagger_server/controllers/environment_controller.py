@@ -1,10 +1,10 @@
 import connexion
 import six
 
+from swagger_server.controllers.image_controller import generate_ai_image
 from swagger_server.models.image_info import ImageInfo  # noqa: E501
 from swagger_server.models.temperature_summary import TemperatureSummary  # noqa: E501
 from swagger_server import util
-
 
 def generate_image(body=None):  # noqa: E501
     """generate_image
@@ -18,12 +18,7 @@ def generate_image(body=None):  # noqa: E501
     """
     if connexion.request.is_json:
         body = ImageInfo.from_dict(connexion.request.get_json())  # noqa: E501
-
-    f = open("garage.jpg", 'rb')
-    cont = f.read()
-    f.close()
-
-    return cont
+    return generate_ai_image(body)
 
 
 def image_summary():  # noqa: E501
