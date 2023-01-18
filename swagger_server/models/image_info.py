@@ -15,7 +15,7 @@ class ImageInfo(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, prompt: str=None, negative_prompt: str=None, prompt_strength: float=None, init_image: str=None, init_image_strength: float=None, mask_prompt: str=None, mask_image: str=None, mask_mode: str=None, mask_modify_original: bool=None, steps: int=None, height: str=None, width: str=None, fix_faces: bool=None, fix_faces_fidelity: float=None, sampler_type: str=None, conditioning: str=None, model: str=None, seed: int=None, upscale: bool=None, tile_mode: bool=None, weighted_prompt: List[WeightedPrompt]=None):  # noqa: E501
+    def __init__(self, prompt: str=None, negative_prompt: str=None, prompt_strength: float=None, init_image: str=None, init_image_strength: float=None, mask_prompt: str=None, mask_image: str=None, mask_mode: str=None, mask_modify_original: bool=None, steps: int=None, height: int=None, width: int=None, fix_faces: bool=None, fix_faces_fidelity: float=None, sampler_type: str=None, conditioning: str=None, model: str=None, seed: int=None, upscale: bool=None, tile_mode: bool=None, weighted_prompt: List[WeightedPrompt]=None):  # noqa: E501
         """ImageInfo - a model defined in Swagger
 
         :param prompt: The prompt of this ImageInfo.  # noqa: E501
@@ -39,9 +39,9 @@ class ImageInfo(Model):
         :param steps: The steps of this ImageInfo.  # noqa: E501
         :type steps: int
         :param height: The height of this ImageInfo.  # noqa: E501
-        :type height: str
+        :type height: int
         :param width: The width of this ImageInfo.  # noqa: E501
-        :type width: str
+        :type width: int
         :param fix_faces: The fix_faces of this ImageInfo.  # noqa: E501
         :type fix_faces: bool
         :param fix_faces_fidelity: The fix_faces_fidelity of this ImageInfo.  # noqa: E501
@@ -72,8 +72,8 @@ class ImageInfo(Model):
             'mask_mode': str,
             'mask_modify_original': bool,
             'steps': int,
-            'height': str,
-            'width': str,
+            'height': int,
+            'width': int,
             'fix_faces': bool,
             'fix_faces_fidelity': float,
             'sampler_type': str,
@@ -358,43 +358,43 @@ class ImageInfo(Model):
         self._steps = steps
 
     @property
-    def height(self) -> str:
+    def height(self) -> int:
         """Gets the height of this ImageInfo.
 
 
         :return: The height of this ImageInfo.
-        :rtype: str
+        :rtype: int
         """
         return self._height
 
     @height.setter
-    def height(self, height: str):
+    def height(self, height: int):
         """Sets the height of this ImageInfo.
 
 
         :param height: The height of this ImageInfo.
-        :type height: str
+        :type height: int
         """
 
         self._height = height
 
     @property
-    def width(self) -> str:
+    def width(self) -> int:
         """Gets the width of this ImageInfo.
 
 
         :return: The width of this ImageInfo.
-        :rtype: str
+        :rtype: int
         """
         return self._width
 
     @width.setter
-    def width(self, width: str):
+    def width(self, width: int):
         """Sets the width of this ImageInfo.
 
 
         :param width: The width of this ImageInfo.
-        :type width: str
+        :type width: int
         """
 
         self._width = width

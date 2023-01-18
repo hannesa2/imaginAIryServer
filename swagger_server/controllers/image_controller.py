@@ -9,7 +9,6 @@ from swagger_server.models.image_info import ImageInfo  # noqa: E501
 def generate_ai_image(body=None):
     if connexion.request.is_json:
         body = ImageInfo.from_dict(connexion.request.get_json())  # noqa: E501
-        print("before body=", body)
         body = request_none_able(body)
         print("after body=", body)
 
@@ -78,9 +77,9 @@ def request_none_able(request):
         request.seed = None
     if request.steps == 0:
         request.steps = None
-    if request.height == "None":
+    if request.height == 0:
         request.height = None
-    if request.width == "None":
+    if request.width == 0:
         request.width = None
     if request.conditioning == "None":
         request.conditioning = None
