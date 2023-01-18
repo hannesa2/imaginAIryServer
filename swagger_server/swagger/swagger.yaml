@@ -570,13 +570,11 @@ components:
           format: int64
           nullable: true
         height:
-          type: string
-          format: string
-          example: None
+          type: integer
+          format: int64
         width:
-          type: string
-          format: string
-          example: None
+          type: integer
+          format: int64
         fix_faces:
           type: boolean
           example: false
