@@ -37,6 +37,6 @@ jobs:
           timeout 5 python3 -m swagger_server || RETURN=$?
           echo "RETURN=$RETURN"
           if [ $RETURN -eq "124" ]; then echo "normal timeout with $RETURN"; else exit $RETURN; fi
-#      - name: Test
-#        run: |
-#          tox
+      - name: Test
+        run: |
+          tox
